@@ -52,25 +52,6 @@ public class Game {
     }
 
     /*
-     * Cheat in the game by marking one of the known bombs with a flag
-     *
-     * @param
-     * @return   void
-     */
-    public void cheat() {
-        outerLoop:
-        for(int i = 0; i < this.boardSize; i++) {
-            for(int j = 0; j < this.boardSize; j++) {
-                if(!this.gameBoard.grid[i][j].isRevealed && this.gameBoard.grid[i][j].isBomb) {
-                    this.gameBoard.grid[i][j].isCheat = true;
-                    this.gameBoard.grid[i][j].reveal();
-                    break outerLoop;
-                }
-            }
-        }
-    }
-
-    /*
      * Game over has ocurred because we hit a bomb.  Show all bombs that were remaining and set
      * the game over indicator to true so that way further cells cannot be unlocked
      *
@@ -91,21 +72,6 @@ public class Game {
     public void gameFinished() {
         this.isGameOver = true;
         Toast.makeText(this.gameView.context, "You've beat the game!", Toast.LENGTH_LONG).show();
-    }
-
-    /*
-     * Manually validate to see if the game was won.  If the game truly was not completed, it is
-     * instant game over
-     *
-     * @param
-     * @return   void
-     */
-    public void validate() {
-        if(this.score == (this.boardSize * this.boardSize) - this.bombCount) {
-            this.gameFinished();
-        } else {
-            this.gameOver();
-        }
     }
 
     /*
@@ -137,11 +103,10 @@ public class Game {
             gameBoard.move();
         }
         if(this.hud[1].hasCollided(event.getX(), event.getY())) {
-            this.cheat();
+            gameBoard.move();
         }
         if(this.hud[2].hasCollided(event.getX(), event.getY())) {
-            this.validate();
+            gameBoard.move();
         }
     }
-
 }
