@@ -21,19 +21,14 @@ public class Client{
     PrintWriter out;
     GridNode principalNode;
 
-    public void start() {
-        new Thread(new ClientThread()).start();
-    }
-
-    class ClientThread implements  Runnable {
-        public void run() {
-            try {
-                socket = new Socket(serverIp, serverPort);
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
-            } catch (IOException e) {
-                System.exit(1);
-            }
+    public void run() {
+        try {
+            socket = new Socket(serverIp, serverPort);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            System.exit(1);
         }
+
     }
 }

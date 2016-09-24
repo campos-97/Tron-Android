@@ -3,31 +3,50 @@ package com.tec.datos1.tron.client;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.tec.datos1.tron.linkedLists.GridNode;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientTask extends AsyncTask<Void, Integer, Void> {
 
+    private Socket socket;
+    public static final  int port = 9898;
+    public static final String serverAddress = "192.168.1.22";
+    private static final String name = "Andres";
+    private boolean readyFlag;
+
+    BufferedReader in;
+    PrintWriter out;
+    GridNode principalNode;
+
     @Override
     protected Void doInBackground(Void... voids) {
-        try {
-            Socket socket = new Socket("192.168.1.22", 8080);
-            InputStream is = socket.getInputStream();
-
-            byte[] buffer = new byte[25];
-            int read = is.read(buffer);
-            while(read != -1){
-                publishProgress(read);
-                read = is.read(buffer);
-            }
-
-            is.close();
-            socket.close();
-
-
-
-        } catch (Exception e) {
+        try{
+            Socket socket = new Socket(serverAddress, port);
+            readyFlag = true;
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+        }
+        catch(Exception e){
             e.printStackTrace();
+        }
+
+        while (readyFlag) {
+            try {
+                String line = in.readLine();
+                if (line == null) {
+                    continue;
+                } else if (line.startsWith("name")) {
+                    out.println(this.name);
+                }
+            }catch (IOException e){
+                    System.exit(1);
+            }
         }
         return null;
     }
