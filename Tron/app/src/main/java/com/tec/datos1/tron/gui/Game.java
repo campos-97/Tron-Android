@@ -1,12 +1,21 @@
 package com.tec.datos1.tron.gui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.tec.datos1.tron.R;
+import com.tec.datos1.tron.client.ClientTask;
 
 public class Game {
 
@@ -19,6 +28,14 @@ public class Game {
     private int score;
     public HUD[] hud;
 
+    private Context context;
+    private Dialog dialog;
+
+
+    private ClientTask task;
+
+    //ClientTask  task;
+
     /*
      * Initialize various game components in the constructor.  Record the size of the board,
      * how many bombs must exist on it, and also prepare various HUD components.
@@ -27,16 +44,19 @@ public class Game {
      * @param    int boardSize
      * @param    int bombCount
      */
-    public Game(GameView gameView, int boardSize) {
+    public Game(GameView gameView, int boardSize,Context context) {
+        this.context = context;
         this.gameView = gameView;
         this.boardSize = boardSize;
-        this.bombCount = bombCount;
         this.gameBoard = new Board(gameView, boardSize);
         this.hud = new HUD[3];
         this.hudSpriteSheet = BitmapFactory.decodeResource(this.gameView.context.getResources(), R.drawable.hud_spritesheet_md);
         this.hud[0] = new HUD(this.gameView, this.hudSpriteSheet, 0, 0);
         this.hud[1] = new HUD(this.gameView, this.hudSpriteSheet, 240, 0);
         this.hud[2] = new HUD(this.gameView, this.hudSpriteSheet, 100, 60);
+
+        task = new ClientTask();
+
     }
 
     /*
@@ -46,6 +66,7 @@ public class Game {
      * @return   void
      */
     public void start() {
+        createDialog(context);
         this.isGameOver = false;
         this.score = 0;
         this.gameBoard.reset();
@@ -87,26 +108,56 @@ public class Game {
         this.hud[2].onDraw(canvas, 0, 2);
     }
 
-    /*
-     * Check for touch collisions on any of the components in our game.  Components are anything
-     * from HUD elements to board cells.  If a touch event collides with the new game button, then start
-     * a new game.  If a touch event collides with the cheat button, then cheat.  However, things get
-     * more complex with board cells because they are in an array.  On every touch event, check to see if
-     * any of the board cells were hit.  If a bomb is touched or the score matches the max possible, then
-     * end the game
-     *
-     * @param    MotionEvent event
-     * @return   void
-     */
     public void registerTouch(MotionEvent event) {
-        if(this.hud[0].hasCollided(event.getX(), event.getY())) {
+        if (this.hud[0].hasCollided(event.getX(), event.getY())) {
+            task.board = this.gameBoard;
+            task.execute();
+        }
+        if (this.hud[1].hasCollided(event.getX(), event.getY())) {
             gameBoard.move();
         }
-        if(this.hud[1].hasCollided(event.getX(), event.getY())) {
+        if (this.hud[2].hasCollided(event.getX(), event.getY())) {
             gameBoard.move();
         }
-        if(this.hud[2].hasCollided(event.getX(), event.getY())) {
-            gameBoard.move();
-        }
+    }
+
+    public void registeredSwipe(String orientation){
+        task.changeOrientation(orientation);
+    }
+
+    public void createDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        // Get the layout inflater
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.dialog_signin, null);
+
+        // Set up the input
+        final EditText userName = (EditText) dialogView
+                .findViewById(R.id.username);
+        final EditText userPort = (EditText) dialogView
+                .findViewById(R.id.port);
+        final EditText ip = (EditText) dialogView
+                .findViewById(R.id.ip);
+        //setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(dialogView)
+                // Add action buttons
+                .setPositiveButton(R.string.signin, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        task.name = userName.getText().toString();
+                        task.serverAddress = ip.getText().toString();
+                        String p = userPort.getText().toString();
+                        task.port = Integer.valueOf(p);
+                        task.port = Integer.valueOf(p);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //End Game
+                    }
+                });
+        builder.show();
     }
 }

@@ -1,14 +1,20 @@
 package com.tec.datos1.tron.gui;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.EditText;
+
+import com.tec.datos1.tron.R;
 
 public class GameView extends SurfaceView {
 
@@ -24,14 +30,14 @@ public class GameView extends SurfaceView {
     protected float			xDiff;
     protected float			yDiff;
 
-
     public GameView(Context context) {
         super(context);
         this.context = context;
         this.gameLoopThread = new GameLoopThread(this);
-        this.game = new Game(this, 10);              // The game will be 8x8 with 10 bombs
+        this.game = new Game(this, 20,context);              // The game will be 8x8 with 10 bombs
         this.game.start();
         holder = getHolder();
+
         holder.addCallback(new SurfaceHolder.Callback() {
 
             /*
@@ -126,17 +132,21 @@ public class GameView extends SurfaceView {
             int g = gratistDiff(xDiff, yDiff);
             if (g == 0) {
                 if (xDiff > 1 ) {
-                    Log.d("hola", String.valueOf(xDiff));
+                    this.game.registeredSwipe("right");
+                    Log.d("move", "right");
                 }
                 if (xDiff < -1) {
-                    Log.d("hola", String.valueOf(xDiff));
+                    this.game.registeredSwipe("left");
+                    Log.d("move", "left");
                 }
             } else if (g == 1) {
                 if (yDiff < -1) {
-                    Log.d("hola", String.valueOf(xDiff));
+                    this.game.registeredSwipe("up");
+                    Log.d("move", "up");
                 }
                 if (yDiff > 1) {
-                    Log.d("hola", String.valueOf(xDiff));
+                    this.game.registeredSwipe("down");
+                    Log.d("move", "down");
                 }
             }
         }
@@ -150,5 +160,6 @@ public class GameView extends SurfaceView {
         if (y > x) return 1;
         return -1;
     }
+
 
 }
