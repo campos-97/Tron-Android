@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 import com.tec.datos1.tron.R;
+import com.tec.datos1.tron.linkedLists.GridNode;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,7 +16,10 @@ public class Board {
     private GameView gameView;
     private Bitmap cellSpriteSheet;
     private int boardSize;
-    private int cellsRevealed;
+
+    public static int xCoord;
+    public static int yCoord;
+
 
     public Board(GameView gameView, int boardSize) {
         this.grid = new Cell[boardSize][boardSize];
@@ -48,15 +52,28 @@ public class Board {
      * @return   void
      */
     public void draw(Canvas canvas) {
-        for(int i = 0; i < this.grid.length; i++) {
-            for(int j = 0; j < this.grid.length; j++) {
-                if(!this.grid[i][j].isPaint()) {
-                    this.grid[i][j].onDraw(canvas, 0, 0);
-                }else{
+        this.grid[0][0].onDraw(canvas,0,0);
+        this.grid[0][0].setX(xCoord*10);
+        this.grid[0][0].setY(yCoord*10);
+        /**for (int i = 0; i < this.grid.length; i++) {
+            for (int j = 0; j < this.grid.length; j++) {
+                if (i == xCoord && j == yCoord) {
                     this.grid[i][j].onDraw(canvas, 0, 1);
+                } else {
+                    this.grid[i][j].onDraw(canvas, 0, 0);
                 }
             }
-        }
+        }*/
+            /**
+             for(int i = 0; i < this.grid.length; i++) {
+             for(int j = 0; j < this.grid.length; j++) {
+             if(!this.grid[i][j].isPaint()) {
+             this.grid[i][j].onDraw(canvas, 0, 0);
+             }else{
+             this.grid[i][j].onDraw(canvas, 0, 1);
+             }
+             }
+             }*/
     }
 
     /*
@@ -69,32 +86,10 @@ public class Board {
     public void reset() {
         for(int i = 0; i < this.grid.length; i++) {
             for(int j = 0; j < this.grid.length; j++) {
-                this.grid[i][j] = new Cell(this.gameView, this.cellSpriteSheet, i, j, false);
+                this.grid[i][j] = new Cell(this.gameView, this.cellSpriteSheet, i, j);
             }
         }
-        this.calculateCellNeighbors();
-        this.setPositions();
-        this.cellsRevealed = 0;
-    }
-
-    /*
-     * Determine all the cells that touch a particular cell
-     *
-     * @param
-     * @return   void
-     */
-    public void calculateCellNeighbors() {
-        for(int x = 0; x < this.grid.length; x++) {
-            for(int y = 0; y < this.grid.length; y++) {
-                for(int i = this.grid[x][y].getX() - 1; i <= this.grid[x][y].getX() + 1; i++) {
-                    for(int j = this.grid[x][y].getY() - 1; j <= this.grid[x][y].getY() + 1; j++) {
-                        if(i >= 0 && i < this.grid.length && j >= 0 && j < this.grid.length) {
-                            this.grid[x][y].addNeighbor(this.grid[i][j]);
-                        }
-                    }
-                }
-            }
-        }
+        //this.setPositions();
     }
 
     /*
@@ -112,40 +107,6 @@ public class Board {
                 this.grid[i][j].setY(140 + j * 40);
             }
         }
-    }
-
-    /*
-     * Reveal a particular cell on the board.  If it is not a bomb, check to see if it has zero
-     * neighbors that are bombs.  Reveal all cells recursively that are neighbors until it finds
-     * a neighboring cell that is a bomb and stop.
-     *
-     * @param    Cell c
-     * @return   boolean bomb
-     */
-    public boolean reveal(Cell c) {
-        c.reveal();
-        if(!c.isBomb) {
-            this.cellsRevealed++;
-            if(c.getBombNeighborCount() == 0) {
-                ArrayList<Cell> neighbors = c.getNeighbors();
-                for(int i = 0; i < neighbors.size(); i++) {
-                    if(!neighbors.get(i).isRevealed) {
-                        reveal(neighbors.get(i));
-                    }
-                }
-            }
-        }
-        return c.isBomb;
-    }
-
-    /*
-     * Return how many cells on the board have been revealed.  Useful for calculating score
-     *
-     * @param
-     * @return   int count
-     */
-    public int getRevealedCount() {
-        return this.cellsRevealed;
     }
 
 }
