@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.tec.datos1.tron.R;
 import com.tec.datos1.tron.gui.Board;
+import com.tec.datos1.tron.gui.GL_Renderer;
 import com.tec.datos1.tron.linkedLists.GridNode;
 
 import java.io.BufferedReader;
@@ -27,7 +28,7 @@ public class ClientTask extends AsyncTask<Void, Integer, Void> {
     public static String name;
     private boolean readyFlag;
 
-    public static Board board;
+    public static GL_Renderer renderer;
 
     BufferedReader in;
     static PrintWriter out;
@@ -82,8 +83,8 @@ public class ClientTask extends AsyncTask<Void, Integer, Void> {
     }
 
     public static void update(int x, int y){
-        board.xCoord = x;
-        board.yCoord = y;
+        renderer.movex = x;
+        renderer.movey = y;
     }
 
     public void changeOrientation(String orientation){

@@ -3,6 +3,8 @@ package com.tec.datos1.tron.gui;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.tec.datos1.tron.R;
 import com.tec.datos1.tron.linkedLists.GridNode;
@@ -19,6 +21,8 @@ public class Board {
 
     public static int xCoord;
     public static int yCoord;
+    public static float xOffset;
+    public static float yOffset;
 
 
     public Board(GameView gameView, int boardSize) {
@@ -53,8 +57,10 @@ public class Board {
      */
     public void draw(Canvas canvas) {
         this.grid[0][0].onDraw(canvas,0,0);
-        this.grid[0][0].setX(xCoord*10);
-        this.grid[0][0].setY(yCoord*10);
+        this.grid[0][0].setX(xCoord*25);
+        this.grid[0][0].setY(yCoord*25);
+
+
         /**for (int i = 0; i < this.grid.length; i++) {
             for (int j = 0; j < this.grid.length; j++) {
                 if (i == xCoord && j == yCoord) {

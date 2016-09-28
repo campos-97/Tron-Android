@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.tec.datos1.tron.R;
@@ -34,7 +35,7 @@ public class GameView extends SurfaceView {
         super(context);
         this.context = context;
         this.gameLoopThread = new GameLoopThread(this);
-        this.game = new Game(this, 20,context);              // The game will be 8x8 with 10 bombs
+        this.game = new Game(this, 100,context);              // The game will be 8x8 with 10 bombs
         this.game.start();
         holder = getHolder();
 
@@ -114,6 +115,8 @@ public class GameView extends SurfaceView {
      * @param    MotionEvent event
      * @return   boolean clicked
      */
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(System.currentTimeMillis() - lastClick > 500) {
@@ -132,20 +135,20 @@ public class GameView extends SurfaceView {
             int g = gratistDiff(xDiff, yDiff);
             if (g == 0) {
                 if (xDiff > 1 ) {
-                    this.game.registeredSwipe("right");
+                    this.game.registeredSwipe("right",xDiff,yDiff);
                     Log.d("move", "right");
                 }
                 if (xDiff < -1) {
-                    this.game.registeredSwipe("left");
+                    this.game.registeredSwipe("left",xDiff,yDiff);
                     Log.d("move", "left");
                 }
             } else if (g == 1) {
                 if (yDiff < -1) {
-                    this.game.registeredSwipe("up");
+                    this.game.registeredSwipe("up",xDiff,yDiff);
                     Log.d("move", "up");
                 }
                 if (yDiff > 1) {
-                    this.game.registeredSwipe("down");
+                    this.game.registeredSwipe("down",xDiff,yDiff);
                     Log.d("move", "down");
                 }
             }

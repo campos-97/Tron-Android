@@ -110,7 +110,7 @@ public class Game {
 
     public void registerTouch(MotionEvent event) {
         if (this.hud[0].hasCollided(event.getX(), event.getY())) {
-            task.board = this.gameBoard;
+            //task.board = this.gameBoard;
             task.execute();
         }
         if (this.hud[1].hasCollided(event.getX(), event.getY())) {
@@ -121,8 +121,10 @@ public class Game {
         }
     }
 
-    public void registeredSwipe(String orientation){
+    public void registeredSwipe(String orientation, float x, float y){
         task.changeOrientation(orientation);
+        this.gameBoard.xOffset += x;
+        this.gameBoard.yOffset += y;
     }
 
     public void createDialog(Context context) {
