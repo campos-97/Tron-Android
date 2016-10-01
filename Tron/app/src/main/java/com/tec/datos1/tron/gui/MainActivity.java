@@ -4,8 +4,6 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.app.Activity;
 
-import com.tec.datos1.tron.client.ClientTask;
-
 public class MainActivity extends Activity {
     private GLSurfaceView glView;
     @Override
