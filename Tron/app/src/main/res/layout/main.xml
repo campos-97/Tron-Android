@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ExtraText">
+
+    //LAYOUT DEL OPEN GL
+    <LinearLayout
+        android:id="@+id/openGLLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessLeaf,UselessParent">
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="57dp"
+            android:layout_height="58dp"
+            android:id="@+id/button4"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:background="@drawable/escudo"
+            android:layout_marginTop="500dp"
+            android:layout_marginLeft="10dp" />
+
+        <Button
+            android:layout_width="65dp"
+            android:layout_height="68dp"
+            android:id="@+id/button5"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:background="@drawable/rayo"
+            android:layout_marginTop="425dp"
+            android:layout_marginLeft="10dp" />
+    </FrameLayout>
+
+    //LAYOUT DEL HUD
+
+</RelativeLayout>
