@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- START of OpenGL Layout -->
+    <LinearLayout
+        android:id="@+id/openGLLayout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </LinearLayout>
+    <!-- END of OpenGL Layout -->
+
+    <!-- START of HUD Layout -->
+    <LinearLayout
+        android:id="@+id/hudLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp">
+        <TextView
+            android:id="@+id/hudText"
+            android:text="Hud Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </TextView>
+    </LinearLayout>
+    <!-- END of HUD Layout -->
+
+</RelativeLayout>

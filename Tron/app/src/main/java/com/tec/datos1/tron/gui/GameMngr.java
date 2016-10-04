@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.tec.datos1.tron.R;
 import com.tec.datos1.tron.client.ClientTask;
 
+/**
+ * @author Andres Campos
+ */
 public class GameMngr {
 
 
@@ -22,6 +25,11 @@ public class GameMngr {
     private ClientTask task;
     GL_Renderer renderer;
 
+    /**
+     * The constructor starts the input menu to for the user.
+     * @param context
+     * @param renderer
+     */
     public GameMngr(Context context,GL_Renderer renderer) {
         this.context = context;
         task = new ClientTask();
@@ -29,10 +37,19 @@ public class GameMngr {
         this.renderer = renderer;
 
     }
+
+    /**
+     * Takes the orientation of the swipe and send it to the ClientTask.
+     * @param orientation
+     */
     public void registeredSwipe(String orientation){
         task.changeOrientation(orientation);
     }
 
+    /**
+     * This is the input menu.
+     * @param context
+     */
     public void createDialog(Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         // Get the layout inflater

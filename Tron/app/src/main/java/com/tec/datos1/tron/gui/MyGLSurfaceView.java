@@ -5,15 +5,19 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 
-/*
- * Custom GL view by extending GLSurfaceView so as
- * to override event handlers such as onKeyUp(), onTouchEvent()
+/**
+ * @author Andres Campos
  */
 public class MyGLSurfaceView extends GLSurfaceView {
     GL_Renderer renderer;    // Custom GL Renderer
     GameMngr game;
 
-    // Constructor - Allocate and set the renderer
+    /**
+     * Constructor, allocates the renderer
+     * Sets OpenGL|ES 2.0
+     * Creates a new game manager
+     * @param context
+     */
     public MyGLSurfaceView(Context context) {
         super(context);
 
@@ -29,15 +33,10 @@ public class MyGLSurfaceView extends GLSurfaceView {
         game =  new GameMngr(context,renderer);
     }
 
-    // Handler for key event
-    //variable for storing the time of first click
-    long startTime;
-    //constant for defining the time duration between the click that can be considered as double-tap
-    final int MAX_DURATION = 200;
-    boolean zoom = false;
-    private float previousX = 0;
-    private float previousY = 0;
-
+    /**
+     * These variables area needed for the touch event
+     * to detect a swipe.
+     */
     private float x = 0;
     private float y = 0;
     private float dx = 0;
@@ -86,6 +85,12 @@ public class MyGLSurfaceView extends GLSurfaceView {
         return true;
     }
 
+    /**
+     * Helps with the swipe event.
+     * @param x
+     * @param y
+     * @return
+     */
     protected int gratistDiff(float x, float y) {
         if (x < 0) x = -x;
         if (y < 0) y = -y;

@@ -5,6 +5,8 @@ import android.opengl.GLES20;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by josea on 9/27/2016.
@@ -32,24 +34,21 @@ public class Line {
 
 
     static final int COORDS_PER_VERTEX = 3;
-    static float LineCoords[] = {
-            0.0f, 0.0f, 0.0f,
-            -10.0f, 0.0f, 0.0f,
-            0.0f, -1.0f, 0.0f,
-            -10.0f, -1.0f, 0.0f,
+    static List<Float> verts = new ArrayList<>();
+    static float LineCoords[];
 
-            0.0f, 0.0f, 0.0f,
-            0.0f, -10.0f, 0.0f,
-            -1.0f, 0.0f, 0.0f,
-            -1.0f, -10.0f, 0.0f
-    };
 
-    private final int VertexCount = LineCoords.length / COORDS_PER_VERTEX;
+    //private int VertexCount = LineCoords.length / COORDS_PER_VERTEX;
     private final int VertexStride = COORDS_PER_VERTEX * 4;
 
     float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
 
+    /**
+     * Constructor method sets the line buffers.
+     */
     public Line() {
+        buildGrid(50,50);
+        vertsToArray();
         ByteBuffer bb = ByteBuffer.allocateDirect(LineCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
 
@@ -65,6 +64,10 @@ public class Line {
 
     }
 
+    /**
+     * Draws the line.
+     * @param mvpMatrix
+     */
     public void draw(float[] mvpMatrix) {
         GLES20.glUseProgram(mProgram);
         PositionHandle = GLES20.glGetAttribLocation(mProgram,"vPosition");
@@ -75,12 +78,15 @@ public class Line {
         GLES20.glUniform4fv(ColorHandle,1,color,0);
         MVPMatrixHandle = GLES20.glGetUniformLocation(mProgram,"uMVPMatrix");
         GLES20.glUniformMatrix4fv(MVPMatrixHandle,1,false,mvpMatrix,0);
-        GLES20.glDrawArrays(GLES20.GL_LINES,0,VertexCount);
+        GLES20.glDrawArrays(GLES20.GL_LINES,0,LineCoords.length/COORDS_PER_VERTEX);
         GLES20.glDisableVertexAttribArray(PositionHandle);
     }
 
     /**
-     * Loads the provided shader in the program.
+     * Loads the shader.
+     * @param type
+     * @param shaderCode
+     * @return
      */
     private static int loadShader(int type, String shaderCode) {
         int shader = GLES20.glCreateShader(type);
@@ -89,5 +95,31 @@ public class Line {
         GLES20.glCompileShader(shader);
 
         return shader;
+    }
+    private int coordCount = 0;
+    public void addVertexCoord(float x, float y, float z){
+        verts.add(x);
+        verts.add(y);
+        verts.add(z);
+
+    }
+    public void buildGrid(int numRows,int numColumns){
+        for(int i = 0 ; i <= numRows ; i++){
+            addVertexCoord(0,-i,0);
+            addVertexCoord(-numRows,-i,0);
+        }
+
+        for(int j = 0 ; j <= numColumns ; j++){
+            addVertexCoord(-j,0,0);
+            addVertexCoord(-j,-numColumns,0);
+        }
+    }
+
+    public void vertsToArray(){
+        LineCoords = new  float[verts.size()];
+        int i = 0;
+        for (float f : verts){
+            LineCoords[i] = verts.get(i++);
+        }
     }
 }

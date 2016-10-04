@@ -3,9 +3,11 @@ package com.tec.datos1.tron.gui;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.GLES10;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
+import android.widget.Switch;
 
 import com.tec.datos1.tron.R;
 
@@ -15,14 +17,26 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 import javax.microedition.khronos.opengles.GL11;
 
 /**
  * A two-dimensional square for use as a drawn object in OpenGL ES 2.0.
+ * @author Andres Campos
  */
-public class Node {
+public class Model {
+
+    public String id;
+    public float x;
+    public float y;
+    public boolean isMe;
+    public String color;
+    public float orientation;
+    public List<Trail> trail =  new ArrayList<>();
+    public int trailNum = 3;
 
     public static final String CUBE_MESH_VERTEX_SHADER = " \n" + "\n"
             + "attribute vec4 vertexPosition; \n"
@@ -45,12 +59,13 @@ public class Node {
     private final FloatBuffer vertexBuffer;
     private final ShortBuffer drawListBuffer;
     private final FloatBuffer texBuffer;
-    private final int mProgram;
+    public FloatBuffer colorBuffer;
     private int mPositionHandle;
     private int texSampler2DHandle;
     private int mvpMatrixHandle;
     private int mMVPMatrixHandle;
     private int textureCoordHandle;
+    private int mProgram;
 
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
@@ -73,12 +88,23 @@ public class Node {
 
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    float color[] = { 0.2f, 0.709803922f, 0.898039216f, 1.0f };
+     float[] colors = {1f, 0f, 1f, 1f,
+            1f, 0f, 1f, 1f,
+            1f, 0f, 1f, 1f,
+            1f, 0f, 1f, 1f,};
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
-    public Node(float addX, float addY) {
+    public Model(float addX, float addY,int amount) {
+
+        int i = amount;
+        while(i>=0){
+            Trail t = new Trail();
+            trail.add(t);
+            i--;
+        }
+
         //Change x and y values for the vertices.
         Log.d("Grid", String.valueOf(squareCoords[0]));
         squareCoords[0] += addX;
@@ -129,6 +155,8 @@ public class Node {
                 "texSampler2D");
         mvpMatrixHandle = GLES20.glGetUniformLocation(mProgram,
                 "modelViewProjectionMatrix");
+        //mColorHandle = GLES20.glGetAttribLocation(mProgram,"a_Color");
+
     }
 
     /**
@@ -147,9 +175,12 @@ public class Node {
                 false, 0, vertexBuffer);
         GLES20.glVertexAttribPointer(textureCoordHandle, 2,
                 GLES20.GL_FLOAT, false, 0, texBuffer);
+        //GLES20.glVertexAttribPointer(mColorHandle, 4,
+              //  GLES20.GL_FLOAT, false, 0, colorBuffer);
 
         GLES20.glEnableVertexAttribArray(mPositionHandle);
         GLES20.glEnableVertexAttribArray(textureCoordHandle);
+        //GLES20.glEnableVertexAttribArray(mColorHandle);
 
         // activate texture 0, bind it, and pass to shader
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
@@ -166,6 +197,7 @@ public class Node {
         // disable the enabled arrays
         GLES20.glDisableVertexAttribArray(mPositionHandle);
         GLES20.glDisableVertexAttribArray(textureCoordHandle);
+       // GLES20.glDisableVertexAttribArray(mColorHandle);
     }
 
     /** Loads the provided shader in the program. */
@@ -178,9 +210,34 @@ public class Node {
         return shader;
     }
 
-    public void loadTexture(GL10 gl, Context context) {
-        // Construct an input stream to texture image "res\drawable\crate.png"
-        InputStream istream = context.getResources().openRawResource(R.raw.grid);
+    public void loadTexture(GL10 gl, Context context,String color) {
+        InputStream istream = context.getResources().openRawResource(R.raw.bluebike);
+
+        if(color.startsWith("blue")){
+            istream = context.getResources().openRawResource(R.raw.bluebike);
+        }else if(color.startsWith("red")){
+            istream = context.getResources().openRawResource(R.raw.redbike);
+        } else if (color.startsWith("green")) {
+            istream = context.getResources().openRawResource(R.raw.greenbike);
+        }else if(color.startsWith("yellow")){
+            istream = context.getResources().openRawResource(R.raw.yellowbike);
+        }else if (color.startsWith("gray")){
+            istream = context.getResources().openRawResource(R.raw.graybike);
+        }else if(color.startsWith("bomb")){
+            istream = context.getResources().openRawResource(R.raw.bomb);
+        }
+        else if(color.startsWith("fuel")){
+            istream = context.getResources().openRawResource(R.raw.fuel);
+        }
+        else if(color.startsWith("turbo")){
+            istream = context.getResources().openRawResource(R.raw.turbo);
+        }
+        else if(color.startsWith("trail")){
+            istream = context.getResources().openRawResource(R.raw.trail);
+        }else if(color.startsWith("shield")){
+            istream =  context.getResources().openRawResource(R.raw.shield);
+        }
+
         Bitmap bitmap;
         try {
             // Read and decode input as bitmap
@@ -214,6 +271,34 @@ public class Node {
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
 
         bitmap.recycle();
+    }
+
+    public void updateTrail(float lastx, float lasty, float lastOrientation){
+        Log.d("trail", "updateTrail");
+        boolean flag = false;
+        for(int i = 0; i < trailNum ; i++){
+            if(trail.get(i).id == null){
+                trail.get(i).x = lastx;
+                trail.get(i).y = lasty;
+                trail.get(i).id = "trail";
+                trail.get(i).orientation = lastOrientation;
+                flag = true;
+                break;
+            }
+        }
+        if(flag == false){
+            for(int i = 0; i < trailNum;i++){
+                if(trail.get(i+1).id != null){
+                    trail.get(i).x = trail.get(i+1).x;
+                    trail.get(i).y = trail.get(i+1).y;
+                    trail.get(i).orientation = trail.get(i+1).orientation;
+                }else{
+                    trail.get(i).x = x;
+                    trail.get(i).y = y;
+                    trail.get(i).orientation = orientation;
+                }
+            }
+        }
     }
 
 }
