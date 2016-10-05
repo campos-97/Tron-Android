@@ -84,6 +84,18 @@ public class ClientStringBrain {
 						break;
 				}
 				break;
+			case "hud":
+				switch (message.getInfo()){
+					case "power":
+						if (message.getColor().equals("shield")){
+
+						}else if (message.getColor().equals("speed")){
+
+						}
+						break;
+					case "shield":
+				}
+				break;
 
 		}
 	}
