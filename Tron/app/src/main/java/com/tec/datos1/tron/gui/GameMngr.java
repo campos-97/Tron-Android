@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,9 +30,8 @@ public class GameMngr {
     /**
      * The constructor starts the input menu to for the user.
      * @param context
-     * @param renderer
      */
-    public GameMngr(Context context,GL_Renderer renderer) {
+    public GameMngr(Context context, GL_Renderer renderer) {
         this.context = context;
         task = new ClientTask();
         createDialog(context);
@@ -88,5 +88,20 @@ public class GameMngr {
                     }
                 });
         builder.show();
+    }
+
+    private float prevZoom = 1;
+    public void hudEvents(String event){
+        switch (event){
+            case "zoom":
+                if(prevZoom == 1){
+                    renderer.zoom = 2;
+                    prevZoom = 2;
+                }else if(prevZoom == 2){
+                    renderer.zoom = 1;
+                    prevZoom = 1;
+                }
+                break;
+        }
     }
 }

@@ -24,10 +24,12 @@ public class MainActivity extends Activity {
     TextView text_notificacion2;
 
     private GLSurfaceView glView;
+    //private GameMngr game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //game = new GameMngr(this);
         setContentView(R.layout.main);
         glView = new MyGLSurfaceView(this);
         LinearLayout openGLLayout = (LinearLayout) findViewById(R.id.openGLLayout);
@@ -38,11 +40,11 @@ public class MainActivity extends Activity {
         button_escudo = (Button) findViewById(R.id.button1);
         button_escudo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (escudo>0) {
+                if (escudo > 0) {
                     escudo--;
                     text_notificacion1 = (TextView) findViewById(R.id.badge1);
                     text_notificacion1.setText(String.valueOf(escudo));
-                }else{
+                } else {
                     text_notificacion1 = (TextView) findViewById(R.id.badge1);
                     text_notificacion1.setText(String.valueOf(escudo));
 
@@ -54,11 +56,11 @@ public class MainActivity extends Activity {
         button_velocidad = (Button) findViewById(R.id.button2);
         button_velocidad.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (velocidad>0) {
+                if (velocidad > 0) {
                     velocidad--;
                     text_notificacion2 = (TextView) findViewById(R.id.badge2);
                     text_notificacion2.setText(String.valueOf(velocidad));
-                }else{
+                } else {
                     text_notificacion2 = (TextView) findViewById(R.id.badge2);
                     text_notificacion2.setText(String.valueOf(velocidad));
                 }
@@ -69,7 +71,6 @@ public class MainActivity extends Activity {
         button_zoom = (Button) findViewById(R.id.button6);
         button_zoom.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
             }
         });
     }
