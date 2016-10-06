@@ -301,7 +301,7 @@ public class Model {
     public void updateTrail(float lastx, float lasty, float lastOrientation){
         Log.d("trail", "updateTrail");
         boolean flag = false;
-        for(int i = 0; i < this.getTrailNum() ; i++){
+        for(int i = 0; i < this.trailNum ; i++){
             if(trail.get(i).id == null){
                 trail.get(i).x = lastx;
                 trail.get(i).y = lasty;

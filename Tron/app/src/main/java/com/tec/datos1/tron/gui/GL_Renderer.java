@@ -91,7 +91,7 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
                 players.add(player);
                 i++;
             }else{
-                Model player = new Model(0,0,3,"gray");
+                Model player = new Model(0,0,200,"gray");
                 player.loadTexture(unused, context,"gray");
                 players.add(player);
                 i++;
@@ -262,6 +262,7 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         for(Model player : players){
             if(player.color != null) {
                 if (player.color.startsWith(id)) {
+                    player.trailNum = 3;
                     player.id = id;
                     player.x = x;
                     player.y = y;
@@ -273,6 +274,7 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         if(found == false){
             for(Model player : players){
                 if(player.id == null){
+                    player.trailNum = 3;
                     player.id = id;
                     player.x = x;
                     player.y = y;
