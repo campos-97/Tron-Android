@@ -302,25 +302,29 @@ public class Model {
         Log.d("trail", "updateTrail");
         boolean flag = false;
         for(int i = 0; i < this.trailNum ; i++){
-            if(trail.get(i).id == null){
-                trail.get(i).x = lastx;
-                trail.get(i).y = lasty;
-                trail.get(i).id = "trail";
-                trail.get(i).orientation = lastOrientation;
-                flag = true;
-                break;
+            if(i < this.trail.size()){
+                if (trail.get(i).id == null) {
+                    trail.get(i).x = lastx;
+                    trail.get(i).y = lasty;
+                    trail.get(i).id = "trail";
+                    trail.get(i).orientation = lastOrientation;
+                    flag = true;
+                    break;
+                }
             }
         }
         if(!flag){
-            for(int i = 0; i < this.getTrailNum(); i++){
-                if(trail.get(i+1).id != null){
-                    trail.get(i).x = trail.get(i+1).x;
-                    trail.get(i).y = trail.get(i+1).y;
-                    trail.get(i).orientation = trail.get(i+1).orientation;
-                }else{
-                    trail.get(i).x = lastx;
-                    trail.get(i).y = lasty;
-                    trail.get(i).orientation = orientation;
+            for(int i = 0; i < this.trailNum; i++){
+                if(i < this.trail.size()-1) {
+                    if (trail.get(i + 1).id != null) {
+                        trail.get(i).x = trail.get(i + 1).x;
+                        trail.get(i).y = trail.get(i + 1).y;
+                        trail.get(i).orientation = trail.get(i + 1).orientation;
+                    } else {
+                        trail.get(i).x = lastx;
+                        trail.get(i).y = lasty;
+                        trail.get(i).orientation = orientation;
+                    }
                 }
             }
         }

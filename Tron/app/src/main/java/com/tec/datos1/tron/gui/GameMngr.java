@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.opengl.GLSurfaceView;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.tec.datos1.tron.R;
 import com.tec.datos1.tron.client.ClientTask;
+import com.tec.datos1.tron.client.clientThread;
 
 /**
  * @author Andres Campos
@@ -27,6 +29,8 @@ public class GameMngr {
     private ClientTask task;
     GL_Renderer renderer;
 
+    private clientThread client;
+
     /**
      * The constructor starts the input menu to for the user.
      * @param context
@@ -37,6 +41,8 @@ public class GameMngr {
         createDialog(context);
         this.renderer = renderer;
 
+        client = new clientThread();
+
     }
 
     /**
@@ -44,7 +50,7 @@ public class GameMngr {
      * @param orientation
      */
     public void registeredSwipe(String orientation){
-        task.changeOrientation(orientation);
+        client.changeOrientation(orientation);
         Log.d("swipe", "hice un swipe "+orientation);
     }
 
@@ -73,13 +79,15 @@ public class GameMngr {
                 .setPositiveButton(R.string.signin, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        task.name = userName.getText().toString();
-                        task.serverAddress = ip.getText().toString();
+                        client.name = userName.getText().toString();
+                        client.serverAddress = ip.getText().toString();
                         String p = userPort.getText().toString();
-                        task.port = Integer.valueOf(p);
-                        task.port = Integer.valueOf(p);
-                        task.renderer = renderer;
-                        task.execute();
+                        client.port = Integer.valueOf(p);
+                        client.port = Integer.valueOf(p);
+                        client.renderer = renderer;
+                        //task.execute();
+                        //task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        client.start();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

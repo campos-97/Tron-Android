@@ -13,7 +13,7 @@ public class ClientStringBrain {
 	 * @param message
 	 * @param client
      */
-	public static void think(NetMessage message, ClientTask client) {
+	public static void think(NetMessage message, clientThread client) {
 
 		switch (message.getKind()){
 			case "state":

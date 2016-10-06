@@ -85,13 +85,13 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         int i= 0;
         while(i<10){
             if(i<4){
-                Model player = new Model(0,0,100,mainColors[i]);
+                Model player = new Model(0,0,50,mainColors[i]);
                 player.loadTexture(unused, context,mainColors[i]);
                 player.color = mainColors[i];
                 players.add(player);
                 i++;
             }else{
-                Model player = new Model(0,0,100,"gray");
+                Model player = new Model(0,0,20,"gray");
                 player.loadTexture(unused, context,"gray");
                 players.add(player);
                 i++;
@@ -189,12 +189,14 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
                     player.shield.draw(gFinalMVPMatrix);
                 }
                 for(int i = 0; i < player.trailNum ; i++){
-                    if(player.trail.get(i).id != null){
-                        Matrix.multiplyMM(gMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-                        Matrix.translateM(gMVPMatrix,0,-player.trail.get(i).x,-player.trail.get(i).y,movez);
-                        Matrix.rotateM(gMVPMatrix, 0, player.trail.get(i).orientation, 0.0f, 0, 1.0f);
-                        Matrix.multiplyMM(gFinalMVPMatrix, 0, gMVPMatrix, 0, gRotationMatrix, 0);
-                        player.trail.get(i).draw(gFinalMVPMatrix);
+                    if(i < player.trail.size()) {
+                        if (player.trail.get(i).id != null) {
+                            Matrix.multiplyMM(gMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+                            Matrix.translateM(gMVPMatrix, 0, -player.trail.get(i).x, -player.trail.get(i).y, movez);
+                            Matrix.rotateM(gMVPMatrix, 0, player.trail.get(i).orientation, 0.0f, 0, 1.0f);
+                            Matrix.multiplyMM(gFinalMVPMatrix, 0, gMVPMatrix, 0, gRotationMatrix, 0);
+                            player.trail.get(i).draw(gFinalMVPMatrix);
+                        }
                     }
                 }
             }

@@ -1,6 +1,5 @@
 package com.tec.datos1.tron.client;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.tec.datos1.tron.gui.GL_Renderer;
@@ -12,10 +11,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- * @author Andres Campos
- * @author Roberto Gutierrez
+ * Created by josea on 10/6/2016.
  */
-public class ClientTask extends AsyncTask<Void, Integer, Void> {
+public class clientThread extends Thread {
 
     public static int port;
     public static String serverAddress;
@@ -27,13 +25,11 @@ public class ClientTask extends AsyncTask<Void, Integer, Void> {
     BufferedReader in;
     static PrintWriter out;
 
-    /**
-     * Does listens the server in the background.
-     * @param voids
-     * @return
-     */
-    @Override
-    protected Void doInBackground(Void... voids) {
+    public void clientThread() {
+    }
+
+    public void run() {
+
         Log.d("server", "Client running " + this.serverAddress + this.name + this.port);
         try{
             Socket socket = new Socket(serverAddress, port);
@@ -50,7 +46,7 @@ public class ClientTask extends AsyncTask<Void, Integer, Void> {
                 String input = in.readLine();
 
                 if (input != null) {
-                    //ClientStringBrain.think(MessageSerial.getInfoFromJsonString(input),this);
+                    ClientStringBrain.think(MessageSerial.getInfoFromJsonString(input),this);
                 }
 
             }
@@ -60,17 +56,8 @@ public class ClientTask extends AsyncTask<Void, Integer, Void> {
             }
         }
         Log.d("server", "voy jalao");
-        return null;
-    }
 
-    /**
-     * Not used, but included due to the use of AsyncTask.
-     * @param values
-     */
-    @Override
-    protected void onProgressUpdate(Integer... values) {
     }
-
     /**
      *Updates the position of the players.
      * @param id
