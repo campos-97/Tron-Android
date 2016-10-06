@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">HelloWorld</string>
     <string name="action_settings">Settings</string>
     <string name="help">Settings</string>
     <string name="new_game">Settings</string>
@@ -8,11 +9,6 @@
     <string name="address">Ip Address</string>
     <string name="signin">SignIn</string>
     <string name="cancel">Cancel</string>
-    <string name="app_name">Tron</string>
-    <string name="title_activity_about">about</string>
-    <string name="title_activity_about_window">about_window</string>
-    <string name="ingenier_a_en_computadores">Ingeniería en Computadores</string>
-    <string name="mauricio_lvarez_varela">Mauricio Álvarez Varela</string>
 
 
 </resources>
