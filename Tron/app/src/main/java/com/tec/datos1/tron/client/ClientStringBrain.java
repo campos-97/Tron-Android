@@ -44,7 +44,7 @@ public class ClientStringBrain {
 					Log.d("kill", "kill!!!!!!");
 					client.kill(message.getColor());
 				}else if(message.getInfo().startsWith("trail")){
-					client.addTrail(message.getColor());
+					client.addTrail(message.getColor(), message.getX());
 				}
 				break;
 			case "cordenate":

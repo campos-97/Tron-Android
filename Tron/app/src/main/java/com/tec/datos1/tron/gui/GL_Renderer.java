@@ -190,7 +190,6 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
                 }
                 for(int i = 0; i < player.trailNum ; i++){
                     if(player.trail.get(i).id != null){
-                        Log.d("trail", "drawTrail: "+player.trail.get(i).id);
                         Matrix.multiplyMM(gMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
                         Matrix.translateM(gMVPMatrix,0,-player.trail.get(i).x,-player.trail.get(i).y,movez);
                         Matrix.rotateM(gMVPMatrix, 0, player.trail.get(i).orientation, 0.0f, 0, 1.0f);
@@ -342,14 +341,13 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         }
     }
 
-    public void addTrail(String id){
+    public void addTrail(String id, int increment){
         for(Model player: players){
             if(player.id != null) {
                 if (player.id.startsWith(id)) {
-                    player.trailNum += 1;
+                    player.setTrailNum(player.getTrailNum() + increment);
                 }
             }
         }
     }
-
 }

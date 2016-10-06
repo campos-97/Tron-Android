@@ -40,6 +40,13 @@ public class Model {
     public Shield shield;
     public boolean hasShield = true;
 
+    public synchronized int getTrailNum(){
+        return this.trailNum;
+    }
+    public synchronized void setTrailNum(int num){
+        this.trailNum = num;
+    }
+
     public static final String CUBE_MESH_VERTEX_SHADER = " \n" + "\n"
             + "attribute vec4 vertexPosition; \n"
             + "attribute vec4 vertexNormal; \n"
@@ -294,7 +301,7 @@ public class Model {
     public void updateTrail(float lastx, float lasty, float lastOrientation){
         Log.d("trail", "updateTrail");
         boolean flag = false;
-        for(int i = 0; i < trailNum ; i++){
+        for(int i = 0; i < this.getTrailNum() ; i++){
             if(trail.get(i).id == null){
                 trail.get(i).x = lastx;
                 trail.get(i).y = lasty;
@@ -304,19 +311,18 @@ public class Model {
                 break;
             }
         }
-        if(flag == false){
-            for(int i = 0; i < trailNum;i++){
+        if(!flag){
+            for(int i = 0; i < this.getTrailNum(); i++){
                 if(trail.get(i+1).id != null){
                     trail.get(i).x = trail.get(i+1).x;
                     trail.get(i).y = trail.get(i+1).y;
                     trail.get(i).orientation = trail.get(i+1).orientation;
                 }else{
-                    trail.get(i).x = x;
-                    trail.get(i).y = y;
+                    trail.get(i).x = lastx;
+                    trail.get(i).y = lasty;
                     trail.get(i).orientation = orientation;
                 }
             }
         }
     }
-
 }

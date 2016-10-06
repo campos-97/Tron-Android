@@ -120,7 +120,7 @@ public class ClientTask extends AsyncTask<Void, Integer, Void> {
         renderer.destroyPlayer(id);
     }
 
-    public void addTrail(String id){
-        renderer.addTrail(id);
+    public void addTrail(String id, int increment){
+        renderer.addTrail(id, increment);
     }
 }
