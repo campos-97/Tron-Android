@@ -17,7 +17,7 @@ import javax.microedition.khronos.opengles.GL10;
  *  @author Andres Campos
  */
 public class GL_Renderer implements GLSurfaceView.Renderer {
-    private Context context;   // Application's context
+    public  Context context;   // Application's context
     private Line line;
 
     public GL10 gl;

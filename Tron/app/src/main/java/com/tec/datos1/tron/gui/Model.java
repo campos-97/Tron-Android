@@ -304,7 +304,7 @@ public class Model {
                 break;
             }
         }
-        if(flag == false){
+        if(!flag){
             for(int i = 0; i < trailNum;i++){
                 if(trail.get(i+1).id != null){
                     trail.get(i).x = trail.get(i+1).x;

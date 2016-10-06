@@ -39,7 +39,7 @@ public class ClientStringBrain {
 				else if(message.getInfo().startsWith("wait")){
 				}
 				else if(message.getInfo().startsWith("end")){
-					//Game Over
+					System.exit(1);
 				}else if(message.getInfo().startsWith("kill")){
 					Log.d("kill", "kill!!!!!!");
 					client.kill(message.getColor());
