@@ -85,13 +85,13 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         int i= 0;
         while(i<10){
             if(i<4){
-                Model player = new Model(0,0,50,mainColors[i]);
+                Model player = new Model(0,0,100,mainColors[i]);
                 player.loadTexture(unused, context,mainColors[i]);
                 player.color = mainColors[i];
                 players.add(player);
                 i++;
             }else{
-                Model player = new Model(0,0,200,"gray");
+                Model player = new Model(0,0,100,"gray");
                 player.loadTexture(unused, context,"gray");
                 players.add(player);
                 i++;
