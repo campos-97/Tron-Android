@@ -5,14 +5,12 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 
-
 /**
  * @author Andres Campos
  */
 public class MyGLSurfaceView extends GLSurfaceView{
     GL_Renderer renderer;    // Custom GL Renderer
     GameMngr game;
-
 
 
     /**
@@ -34,7 +32,6 @@ public class MyGLSurfaceView extends GLSurfaceView{
         this.setFocusableInTouchMode(true);
 
         game =  new GameMngr(context,renderer);
-
     }
 
     /**
@@ -102,19 +99,6 @@ public class MyGLSurfaceView extends GLSurfaceView{
         if (x > y) return 0;
         if (y > x) return 1;
         return -1;
-    }
-
-    private float prevZoom = 1;
-    public void hudEvents(String event){
-        switch (event){
-            case "zoom":
-                if(prevZoom == 1){
-                    renderer.zoom = 2;
-                }else if(prevZoom == 2){
-                    renderer.zoom = 1;
-                }
-                break;
-        }
     }
 
 }

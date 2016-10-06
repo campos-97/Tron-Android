@@ -42,7 +42,7 @@
             android:id="@+id/button1"
             android:background="@drawable/escudo"
             tools:ignore="HardcodedText,RtlHardcoded"
-            android:layout_marginTop="425dp"
+            android:layout_marginTop="500dp"
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
 
@@ -57,7 +57,7 @@
         android:textStyle="bold"
         tools:ignore="HardcodedText,RtlHardcoded"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="425dp" />
+        android:layout_marginTop="500dp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
             android:id="@+id/button2"
             android:background="@drawable/rayo"
             tools:ignore="HardcodedText,RtlHardcoded"
-            android:layout_marginTop="350dp"
+            android:layout_marginTop="420dp"
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
 
@@ -84,7 +84,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         tools:ignore="HardcodedText,RtlHardcoded"
-        android:layout_marginTop="350dp" />
+        android:layout_marginTop="420dp" />
 
     //LAYOUT DEL HUD
 

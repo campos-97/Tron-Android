@@ -18,7 +18,6 @@ public class MainActivity extends Activity {
     public int escudo = 5;
     private Button button_escudo;
     private Button button_velocidad;
-    private Button button_zoom;
 
     TextView text_notificacion1;
     TextView text_notificacion2;
@@ -62,14 +61,6 @@ public class MainActivity extends Activity {
                     text_notificacion2 = (TextView) findViewById(R.id.badge2);
                     text_notificacion2.setText(String.valueOf(velocidad));
                 }
-            }
-        });
-
-        //CREACION DEL BOTON ZOOM
-        button_zoom = (Button) findViewById(R.id.button6);
-        button_zoom.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
             }
         });
     }
