@@ -39,7 +39,7 @@ public class ClientStringBrain {
 				else if(message.getInfo().startsWith("wait")){
 				}
 				else if(message.getInfo().startsWith("end")){
-					//Game Over
+					System.exit(1);
 				}else if(message.getInfo().startsWith("kill")){
 					Log.d("kill", "kill!!!!!!");
 					client.kill(message.getColor());
@@ -50,7 +50,8 @@ public class ClientStringBrain {
 			case "cordenate":
 				switch (message.getInfo()){
 					case "head":
-						client.update(message.getColor(), message.getX(), message.getY());
+                        Log.d("swipe", "nueva ubicacion ");
+                        client.update(message.getColor(), message.getX(), message.getY());
 						break;
 					case "bomb":
 						client.addItem("bomb",message.getX(),message.getY());
@@ -82,6 +83,18 @@ public class ClientStringBrain {
 					case "shielded":
 						client.removeItem("shield",message.getX(),message.getY());
 						break;
+				}
+				break;
+			case "hud":
+				switch (message.getInfo()){
+					case "power":
+						if (message.getColor().equals("shield")){
+
+						}else if (message.getColor().equals("speed")){
+
+						}
+						break;
+					case "shield":
 				}
 				break;
 

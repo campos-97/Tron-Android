@@ -24,10 +24,12 @@ public class MainActivity extends Activity {
     TextView text_notificacion2;
 
     private GLSurfaceView glView;
+    //private GameMngr game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //game = new GameMngr(this);
         setContentView(R.layout.main);
         glView = new MyGLSurfaceView(this);
         LinearLayout openGLLayout = (LinearLayout) findViewById(R.id.openGLLayout);

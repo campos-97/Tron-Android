@@ -5,12 +5,14 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 
+
 /**
  * @author Andres Campos
  */
 public class MyGLSurfaceView extends GLSurfaceView{
     GL_Renderer renderer;    // Custom GL Renderer
     GameMngr game;
+
 
 
     /**
