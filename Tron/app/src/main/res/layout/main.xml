@@ -1,33 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    tools:ignore="ExtraText">
 
-    <!-- START of OpenGL Layout -->
+    //LAYOUT DEL OPEN GL
     <LinearLayout
         android:id="@+id/openGLLayout"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    </LinearLayout>
-    <!-- END of OpenGL Layout -->
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessLeaf,UselessParent">
 
-    <!-- START of HUD Layout -->
-    <LinearLayout
-        android:id="@+id/hudLayout"
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="65dip"
+            android:layout_height="65dip"
+            android:id="@+id/button6"
+            android:layout_marginBottom="11dp"
+            tools:ignore="HardcodedText"
+            android:background="@drawable/zoom2"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp">
-        <TextView
-            android:id="@+id/hudText"
-            android:text="Hud Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </TextView>
-    </LinearLayout>
-    <!-- END of HUD Layout -->
+        android:id="@+id/relative_layout1">
+
+        <Button
+            android:layout_width="65dip"
+            android:layout_height="65dip"
+            android:id="@+id/button1"
+            android:background="@drawable/escudo"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:layout_marginTop="500dp"
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/badge1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/relative_layout1"
+        android:background="@drawable/item_count"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="500dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative_layout2">
+
+        <Button
+            android:layout_width="65dip"
+            android:layout_height="65dip"
+            android:id="@+id/button2"
+            android:background="@drawable/rayo"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:layout_marginTop="420dp"
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/badge2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/relative_layout1"
+        android:background="@drawable/item_count"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginTop="420dp" />
+
+    //LAYOUT DEL HUD
 
 </RelativeLayout>
