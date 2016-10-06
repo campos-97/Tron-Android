@@ -18,6 +18,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class GL_Renderer implements GLSurfaceView.Renderer {
     private Context context;   // Application's context
+    private Trail trail;
     private Line line;
 
     public GL10 gl;
@@ -78,6 +79,7 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         GLES20.glDepthFunc(GLES20.GL_LEQUAL);
 
+        trail = new Trail();
         line = new Line();
         unused.glEnable(GL10.GL_TEXTURE_2D);  // Enable texture (NEW)
 
@@ -85,13 +87,13 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         int i= 0;
         while(i<10){
             if(i<4){
-                Model player = new Model(0,0,50,mainColors[i]);
+                Model player = new Model(0,0,50);
                 player.loadTexture(unused, context,mainColors[i]);
                 player.color = mainColors[i];
                 players.add(player);
                 i++;
             }else{
-                Model player = new Model(0,0,3,"gray");
+                Model player = new Model(0,0,3);
                 player.loadTexture(unused, context,"gray");
                 players.add(player);
                 i++;
@@ -99,7 +101,7 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         }
         int itms = 0;
         while (itms<50){
-            Model item = new Model(0,0,0,"");
+            Model item = new Model(0,0,0);
             if(itms<10){
                 item.loadTexture(unused,context,"bomb");
                 item.color = "bomb";
@@ -185,9 +187,6 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
                 Matrix.rotateM(gMVPMatrix, 0, player.orientation, 0.0f, 0, 1.0f);
                 Matrix.multiplyMM(gFinalMVPMatrix, 0, gMVPMatrix, 0, gRotationMatrix, 0);
                 player.draw(gFinalMVPMatrix);
-                if(player.hasShield == true){
-                    player.shield.draw(gFinalMVPMatrix);
-                }
                 for(int i = 0; i < player.trailNum ; i++){
                     if(player.trail.get(i).id != null){
                         Log.d("trail", "drawTrail: "+player.trail.get(i).id);
@@ -210,6 +209,7 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
                 bomb.draw(gFinalMVPMatrix);
             }
         }
+        //trail.draw(gFinalMVPMatrix);
     }
 
     /**
@@ -259,21 +259,14 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
      */
     public void addPlayer(String id, float x, float y){
         Log.d("game", "addPlayer: "+id);
-        boolean found =  false;
         for(Model player : players){
-            if(player.color != null) {
+            if(player.id == null && player.color != null) {
                 if (player.color.startsWith(id)) {
                     player.id = id;
                     player.x = x;
                     player.y = y;
-                    found = true;
                     break;
-                }
-            }
-        }
-        if(found == false){
-            for(Model player : players){
-                if(player.id == null){
+                } else {
                     player.id = id;
                     player.x = x;
                     player.y = y;

@@ -37,8 +37,6 @@ public class Model {
     public float orientation;
     public List<Trail> trail =  new ArrayList<>();
     public int trailNum = 3;
-    public Shield shield;
-    public boolean hasShield = true;
 
     public static final String CUBE_MESH_VERTEX_SHADER = " \n" + "\n"
             + "attribute vec4 vertexPosition; \n"
@@ -72,10 +70,10 @@ public class Model {
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
     private final float squareCoords[] = {
-            -0.5f,  0.5f, -0.5f,   // top left
-            -0.5f, -0.5f, -0.5f,   // bottom left
-            0.5f, -0.5f, -0.5f,   // bottom right
-            0.5f,  0.5f, -0.5f }; // top right
+            -0.5f,  0.5f, 0.0f,   // top left
+            -0.5f, -0.5f, 0.0f,   // bottom left
+            0.5f, -0.5f, 0.0f,   // bottom right
+            0.5f,  0.5f, 0.0f }; // top right
     private final short drawOrder[] = { 0, 1, 2, 0, 2, 3 }; // order to draw vertices
 
     static float[] texCoords =
@@ -90,35 +88,19 @@ public class Model {
 
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-     float[] blue = {  0.0f, 0.0f, 1.0f, 1.0f};
-    float[] green = { 0.5f, 1.0f, 0.5f, 1.0f };
-    float[] yellow = { 1.0f, 1.0f, 0.0f , 1.0f };
-    float[] red = { 1.0f, 0.0f, 0.0f ,1.0f};
-    float[] purple = { 1.0f, 0.0f, 1.0f, 1.0f };
-
+     float[] colors = {1f, 0f, 1f, 1f,
+            1f, 0f, 1f, 1f,
+            1f, 0f, 1f, 1f,
+            1f, 0f, 1f, 1f,};
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
-    public Model(float addX, float addY,int amount,String color) {
-
-        float[] thisColor = blue;
-        if(color.startsWith("blue")){
-            thisColor = blue;
-        }else if(color.startsWith("green")){
-            thisColor = green;
-        }else if(color.startsWith("red")){
-            thisColor = red;
-        }else if(color.startsWith("yellow")){
-            thisColor = blue;
-        }else if (color.startsWith("gray")){
-        }
-
-        shield = new Shield(thisColor);
+    public Model(float addX, float addY,int amount) {
 
         int i = amount;
         while(i>=0){
-            Trail t = new Trail(thisColor);
+            Trail t = new Trail();
             trail.add(t);
             i--;
         }

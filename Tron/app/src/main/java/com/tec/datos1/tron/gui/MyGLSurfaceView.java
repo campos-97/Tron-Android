@@ -8,10 +8,9 @@ import android.view.MotionEvent;
 /**
  * @author Andres Campos
  */
-public class MyGLSurfaceView extends GLSurfaceView{
+public class MyGLSurfaceView extends GLSurfaceView {
     GL_Renderer renderer;    // Custom GL Renderer
     GameMngr game;
-
 
     /**
      * Constructor, allocates the renderer
@@ -100,5 +99,4 @@ public class MyGLSurfaceView extends GLSurfaceView{
         if (y > x) return 1;
         return -1;
     }
-
 }

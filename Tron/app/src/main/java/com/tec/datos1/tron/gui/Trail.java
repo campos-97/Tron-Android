@@ -55,13 +55,12 @@ public class Trail {
 
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    float[] color;
+    float color[] = { 0.2f, 0.709803922f, 0.898039216f, 1.0f };
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
-    public Trail(float[] newColor) {
-        color = newColor;
+    public Trail() {
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (# of coordinate values * 4 bytes per float)
