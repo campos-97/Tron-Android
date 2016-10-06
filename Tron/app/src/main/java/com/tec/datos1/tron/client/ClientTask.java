@@ -48,10 +48,11 @@ public class ClientTask extends AsyncTask<Void, Integer, Void> {
         while (readyFlag) {
             try{
                 String input = in.readLine();
-                if (input == null){
+                /**if (input == null){
                     continue;
-                }
-                else{
+                }*/
+
+                if (input != null) {
                     ClientStringBrain.think(MessageSerial.getInfoFromJsonString(input),this);
                 }
 

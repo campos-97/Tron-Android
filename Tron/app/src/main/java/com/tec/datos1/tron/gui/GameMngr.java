@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,6 +45,7 @@ public class GameMngr {
      */
     public void registeredSwipe(String orientation){
         task.changeOrientation(orientation);
+        Log.d("swipe", "hice un swipe "+orientation);
     }
 
     /**

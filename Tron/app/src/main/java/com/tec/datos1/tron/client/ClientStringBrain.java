@@ -50,7 +50,8 @@ public class ClientStringBrain {
 			case "cordenate":
 				switch (message.getInfo()){
 					case "head":
-						client.update(message.getColor(), message.getX(), message.getY());
+                        Log.d("swipe", "nueva ubicacion ");
+                        client.update(message.getColor(), message.getX(), message.getY());
 						break;
 					case "bomb":
 						client.addItem("bomb",message.getX(),message.getY());
