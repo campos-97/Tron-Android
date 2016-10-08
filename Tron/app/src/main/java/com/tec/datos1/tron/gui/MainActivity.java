@@ -3,6 +3,7 @@ package com.tec.datos1.tron.gui;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +21,7 @@ public class MainActivity extends Activity {
     private Button button_velocidad;
     private Button button_zoom;
     private String prev = "zoomIn";
-
-
+    private TextView fuel;
 
     private GLSurfaceView glView;
     private GameMngr game;
@@ -82,6 +82,16 @@ public class MainActivity extends Activity {
                     prev = "zoomIn";
                 }
 
+            }
+        });
+
+        fuel = (TextView) findViewById(R.id.badge2);
+        final Handler handler=new Handler();
+        handler.post(new Runnable(){
+            @Override
+            public void run() {
+                fuel.setText(String.valueOf(game.fuel));
+                handler.postDelayed(this,500); // set time here to refresh textView
             }
         });
     }

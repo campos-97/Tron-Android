@@ -47,19 +47,6 @@
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/badge1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/relative_layout1"
-        android:background="@drawable/item_count"
-        android:textColor="#FFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText,RtlHardcoded"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="425dp" />
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,19 +61,6 @@
             android:layout_marginTop="350dp"
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/badge2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/relative_layout1"
-        android:background="@drawable/item_count"
-        android:textColor="#FFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText,RtlHardcoded"
-        android:layout_marginTop="350dp"
-        android:focusable="false" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -119,6 +93,21 @@
             android:layout_marginRight="-10dp"
             android:layout_marginTop="80dp"
             android:adjustViewBounds="false" />
+
+        <TextView
+            android:id="@+id/badge2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/relative_layout1"
+            android:background="@drawable/item_count"
+            android:textColor="#FFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:layout_marginTop="10dp"
+            android:focusable="false"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginRight="150dp" />
 
     </FrameLayout>
 

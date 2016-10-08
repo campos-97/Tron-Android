@@ -1,14 +1,17 @@
 package com.tec.datos1.tron.gui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.tec.datos1.tron.R;
@@ -34,6 +37,7 @@ public class GameMngr {
     public ImageView thirdPowerUp;
 
     private clientThread client;
+    public int fuel = 100;
 
     /**
      * The constructor starts the input menu to for the user.

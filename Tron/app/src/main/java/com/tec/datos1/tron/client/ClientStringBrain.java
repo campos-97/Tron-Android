@@ -99,6 +99,9 @@ public class ClientStringBrain {
 					case "shield":
 						client.updateShield(message.getColor());
 						break;
+					case "fuel":
+						client.updateFuel(message.getX());
+						break;
 				}
 				break;
 

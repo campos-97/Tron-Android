@@ -107,18 +107,18 @@ public class Model {
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
-    public Model(float addX, float addY,int amount,String color) {
+    public Model(float addX, float addY,int amount,String c) {
 
-        float[] thisColor = blue;
-        if(color.startsWith("blue")){
+        float[] thisColor = purple;
+        if(c.startsWith("blue")){
             thisColor = blue;
-        }else if(color.startsWith("green")){
+        }else if(c.startsWith("green")){
             thisColor = green;
-        }else if(color.startsWith("red")){
+        }else if(c.startsWith("red")){
             thisColor = red;
-        }else if(color.startsWith("yellow")){
+        }else if(c.startsWith("yellow")){
             thisColor = yellow;
-        }else if (color.startsWith("gray")){
+        }else if (c.startsWith("gray")){
             thisColor = purple;
         }
 

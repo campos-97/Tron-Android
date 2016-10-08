@@ -226,6 +226,7 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
             if(player.id!=null) {
                 player.updateTrail(player.x, player.y, player.orientation);
                 if (player.id.equals(id)) {
+                    Log.d("myPlayer", "drawing: "+id+"   The bike color is: "+player.color+"  The bike id is: "+player.id);
                     Log.d("game", "Found: " + player.id);
                     found = true;
                     if(player.x < x){
@@ -262,7 +263,7 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
         Log.d("game", "addPlayer: "+id);
         boolean found =  false;
         for(Model player : players){
-            if(player.color != null) {
+            if(player.color != null && player.isMe == false) {
                 if (player.color.startsWith(id)) {
                     player.trailNum = 3;
                     player.id = id;
@@ -293,13 +294,13 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
      */
     public void addPlayer(String id,boolean isMe){
         for(Model player : players){
-            if(player.id == null){
-                if(player.color.startsWith(id)){
-                    players.get(0).id = id;
-                    players.get(0).isMe = isMe;
-                    break;
-                }
+            if(player.color.startsWith(id)){
+                Log.d("myPlayer", "Create myPlayer: "+id+"   The bike color is: "+player.color);
+                player.id = id;
+                player.isMe = isMe;
+                break;
             }
+
         }
     }
 

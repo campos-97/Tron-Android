@@ -72,7 +72,7 @@ public class clientThread extends Thread {
      * @param id
      */
     public static void createMyPlayer(String id){
-        Log.d("game", id);
+        Log.d("myPlayer", "Its my color: "+id);
         renderer.addPlayer(id,true);
     }
 
@@ -126,5 +126,9 @@ public class clientThread extends Thread {
 
     public void updateShield(String id){
         renderer.updateShield(id);
+    }
+
+    public void updateFuel(int fuel){
+        gameMngr.fuel = fuel;
     }
 }
