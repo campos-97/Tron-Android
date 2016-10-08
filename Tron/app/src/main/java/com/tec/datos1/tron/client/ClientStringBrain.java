@@ -89,12 +89,16 @@ public class ClientStringBrain {
 				switch (message.getInfo()){
 					case "power":
 						if (message.getColor().equals("shield")){
-
+							Log.d("HUD", "shield");
+							client.updatePowerUps("shield");
 						}else if (message.getColor().equals("speed")){
-
+							Log.d("HUD", "speed");
+							client.updatePowerUps("speed");
 						}
 						break;
 					case "shield":
+						client.updateShield(message.getColor());
+						break;
 				}
 				break;
 

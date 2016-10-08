@@ -38,7 +38,7 @@ public class Model {
     public List<Trail> trail =  new ArrayList<>();
     public int trailNum = 3;
     public Shield shield;
-    public boolean hasShield = true;
+    public boolean hasShield = false;
 
     public synchronized int getTrailNum(){
         return this.trailNum;
@@ -117,8 +117,9 @@ public class Model {
         }else if(color.startsWith("red")){
             thisColor = red;
         }else if(color.startsWith("yellow")){
-            thisColor = blue;
+            thisColor = yellow;
         }else if (color.startsWith("gray")){
+            thisColor = purple;
         }
 
         shield = new Shield(thisColor);
@@ -236,7 +237,7 @@ public class Model {
     }
 
     public void loadTexture(GL10 gl, Context context,String color) {
-        InputStream istream = context.getResources().openRawResource(R.raw.bluebike);
+        InputStream istream = context.getResources().openRawResource(R.raw.graybike);
 
         if(color.startsWith("blue")){
             istream = context.getResources().openRawResource(R.raw.bluebike);

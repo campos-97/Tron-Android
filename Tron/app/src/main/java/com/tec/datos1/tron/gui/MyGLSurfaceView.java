@@ -21,7 +21,7 @@ public class MyGLSurfaceView extends GLSurfaceView{
      * Creates a new game manager
      * @param context
      */
-    public MyGLSurfaceView(Context context) {
+    public MyGLSurfaceView(Context context,GameMngr gameMngr) {
         super(context);
 
         // Create an OpenGL ES 2.0 context.
@@ -33,7 +33,8 @@ public class MyGLSurfaceView extends GLSurfaceView{
         this.requestFocus();
         this.setFocusableInTouchMode(true);
 
-        game =  new GameMngr(context,renderer);
+        game = gameMngr; //new GameMngr(context,renderer);
+        game.renderer = renderer;
     }
 
     /**

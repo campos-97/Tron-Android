@@ -354,4 +354,18 @@ public class GL_Renderer implements GLSurfaceView.Renderer {
             }
         }
     }
+
+    public void updateShield(String id){
+        for(Model player: players){
+            if(player.id != null) {
+                if (player.id.startsWith(id)) {
+                    if(player.hasShield == false){
+                        player.hasShield = true;
+                    } else if(player.hasShield == true){
+                        player.hasShield = false;
+                    }
+                }
+            }
+        }
+    }
 }

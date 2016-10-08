@@ -3,20 +3,19 @@ package com.tec.datos1.tron.gui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.opengl.GLSurfaceView;
-import android.os.AsyncTask;
+
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
+
 
 import com.tec.datos1.tron.R;
 import com.tec.datos1.tron.client.ClientTask;
 import com.tec.datos1.tron.client.clientThread;
+import com.tec.datos1.tron.linkedList.Node;
+import com.tec.datos1.tron.linkedList.StackLinkedList;
 
 /**
  * @author Andres Campos
@@ -29,19 +28,25 @@ public class GameMngr {
     private ClientTask task;
     GL_Renderer renderer;
 
+    public StackLinkedList<String> powerUps = new StackLinkedList<>();
+    public ImageView firstPowerUp;
+    public ImageView secondPowerUp;
+    public ImageView thirdPowerUp;
+
     private clientThread client;
 
     /**
      * The constructor starts the input menu to for the user.
      * @param context
      */
-    public GameMngr(Context context, GL_Renderer renderer) {
+    public GameMngr(Context context) {
         this.context = context;
         task = new ClientTask();
         createDialog(context);
-        this.renderer = renderer;
+        //this.renderer = renderer;
 
         client = new clientThread();
+        client.gameMngr = this;
 
     }
 
@@ -92,24 +97,57 @@ public class GameMngr {
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //End Game
+                        System.exit(1);
                     }
                 });
         builder.show();
     }
 
-    private float prevZoom = 1;
+    public void addPowerUps(String id){
+        powerUps.push(id);
+        //updateHUD();
+    }
+
     public void hudEvents(String event){
         switch (event){
             case "zoom":
-                if(prevZoom == 1){
+                if(renderer.zoom == 1){
                     renderer.zoom = 2;
-                    prevZoom = 2;
-                }else if(prevZoom == 2){
+                }else if(renderer.zoom == 2){
                     renderer.zoom = 1;
-                    prevZoom = 1;
                 }
                 break;
+            case "powerUp":
+                String powerUp = powerUps.pop().getData().toLowerCase();
+                client.usePowerUp(powerUp);
+                updateHUD();
+                break;
+            case "switch":
+                Node<String> temp = powerUps.pop();
+                powerUps.addLast(temp);
+                updateHUD();
+                break;
+        }
+    }
+
+    private void updateHUD() {
+        for (int i = 0; i < 3; i++) {
+            ImageView view = thirdPowerUp;
+            if(i == 0){
+                view = firstPowerUp;
+            }else if(i == 1){
+                view = secondPowerUp;
+            }else if(i == 2){
+                view = thirdPowerUp;
+            }
+            if (powerUps.getSize()>i) {
+                Log.d("HUD", String.valueOf(powerUps.getSize()));
+                if(powerUps.getByIndex(i).getData().startsWith("shield")){
+                    view.setBackgroundResource(R.drawable.escudo);
+                }else if(powerUps.getByIndex(i).getData().startsWith("speed")){
+                    view.setBackgroundResource(R.drawable.rayo);
+                }
+            }
         }
     }
 }

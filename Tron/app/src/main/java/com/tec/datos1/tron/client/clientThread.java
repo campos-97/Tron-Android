@@ -3,6 +3,7 @@ package com.tec.datos1.tron.client;
 import android.util.Log;
 
 import com.tec.datos1.tron.gui.GL_Renderer;
+import com.tec.datos1.tron.gui.GameMngr;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,12 +22,10 @@ public class clientThread extends Thread {
     private boolean readyFlag = true;
 
     public static GL_Renderer renderer;
+    public GameMngr gameMngr;
 
     BufferedReader in;
     static PrintWriter out;
-
-    public void clientThread() {
-    }
 
     public void run() {
 
@@ -106,5 +105,26 @@ public class clientThread extends Thread {
 
     public void addTrail(String id, int increment){
         renderer.addTrail(id, increment);
+    }
+
+    public void updatePowerUps(String id){
+
+        gameMngr.addPowerUps(id);
+        //gameMngr.powerUps.push(id);
+    }
+
+    public void usePowerUp(String id){
+        NetMessage delivery = new NetMessage(null, null, 0, 0, "");
+        delivery.setKind("power");
+        delivery.setInfo(id);
+        try {
+            out.println(MessageSerial.getJsonStringFromMessage(delivery));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateShield(String id){
+        renderer.updateShield(id);
     }
 }
